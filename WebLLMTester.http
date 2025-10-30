@@ -1,0 +1,6 @@
+@WebLLMTester_HostAddress = http://localhost:5073
+
+GET {{WebLLMTester_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
