@@ -12,8 +12,8 @@ public class User : BaseEntity
     public string? Username { get; set; }
     public string FirstName { get; set; } = null!;
     public string? LastName { get; set; }
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime LastLoginAt { get; set; } = DateTime.UtcNow;
+    public DateTime CreatedAt { get; set; } 
+    public DateTime LastLoginAt { get; set; }
 
     public ICollection<Roadmap> Roadmaps { get; set; } = [];
 }

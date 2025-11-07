@@ -1,26 +1,18 @@
 ﻿using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Uply.Domain.Abstractions.Repositories;
+using Uply.Domain.Abstractions.Services;
 using Uply.Web.Controllers.Abstract;
 
 namespace Uply.Web.Controllers;
 
-public class AuthController(IUserRepository userRepository) : RestApiController
+public class AuthController(IAuthService authService) : RestApiController
 {
-    [HttpGet]
-    public async Task<IActionResult> Authorize()
+    [HttpPost("login")]
+    public async Task<IActionResult> Authorize([FromQuery] string initDataRaw)
     {
-        var user = new User()
-        {
-            Username = "admin",
-            FirstName = "admin",
-            LastName = "admin",
-        };
+        var user = await authService.AuthorizeAsync(initDataRaw);
 
-        await userRepository.CreateAsync(user);
-
-        var userFromDb = await userRepository.GetByIdAsync(user.Id);
-
-        return Ok(userFromDb);
+        return Ok(user);
     }
 }
