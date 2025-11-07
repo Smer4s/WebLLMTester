@@ -13,8 +13,6 @@ public class AuthController(IUserRepository userRepository) : RestApiController
         var user = new User()
         {
             Username = "admin",
-            CreatedAt = DateTime.Now,
-            LastLoginAt = DateTime.Now,
             FirstName = "admin",
             LastName = "admin",
         };
