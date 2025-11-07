@@ -1,6 +1,6 @@
-﻿using Domain.Entities.Abstract;
+﻿using Uply.Domain.Entities.Abstract;
 
-namespace Domain.Entities;
+namespace Uply.Domain.Entities;
 
 public class RoadmapTask : BaseEntity
 {

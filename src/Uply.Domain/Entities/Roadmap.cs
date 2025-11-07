@@ -1,7 +1,7 @@
-﻿using Domain.Entities.Abstract;
-using Domain.Enums;
+﻿using Uply.Domain.Entities.Abstract;
+using Uply.Domain.Enums;
 
-namespace Domain.Entities;
+namespace Uply.Domain.Entities;
 
 public class Roadmap : BaseEntity
 {

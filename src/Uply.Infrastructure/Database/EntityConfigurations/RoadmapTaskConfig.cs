@@ -1,6 +1,6 @@
-﻿using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Uply.Domain.Entities;
 
 namespace Uply.Infrastructure.Database.EntityConfigurations;
 

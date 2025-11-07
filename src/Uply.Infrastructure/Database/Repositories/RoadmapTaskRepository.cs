@@ -1,6 +1,6 @@
-﻿using Domain.Entities;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using Uply.Domain.Abstractions.Repositories;
+using Uply.Domain.Entities;
 using Uply.Infrastructure.Database;
 using Uply.Infrastructure.Database.Repositories.Abstract;
 

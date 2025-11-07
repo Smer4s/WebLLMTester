@@ -1,6 +1,6 @@
-﻿using Domain.Entities.Abstract;
+﻿using Uply.Domain.Entities.Abstract;
 
-namespace Domain.Entities;
+namespace Uply.Domain.Entities;
 
 public class User : BaseEntity
 {
@@ -12,7 +12,7 @@ public class User : BaseEntity
     public string? Username { get; set; }
     public string FirstName { get; set; } = null!;
     public string? LastName { get; set; }
-    public DateTime CreatedAt { get; set; } 
+    public DateTime CreatedAt { get; set; }
     public DateTime LastLoginAt { get; set; }
 
     public ICollection<Roadmap> Roadmaps { get; set; } = [];

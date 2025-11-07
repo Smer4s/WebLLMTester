@@ -1,7 +1,6 @@
-﻿using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Uply.Domain.Abstractions.Repositories;
-using Uply.Infrastructure.Database;
+using Uply.Domain.Entities;
 using Uply.Infrastructure.Database.Repositories.Abstract;
 
 namespace Uply.Infrastructure.Database.Repositories;
@@ -10,4 +9,7 @@ public class UserRepository(AppDbContext dbContext) : CrudRepository<User>(dbCon
 {
     public async Task<User?> GetByTelegramIdAsync(long telegramId) =>
         await _dbSet.FirstOrDefaultAsync(u => u.TelegramId == telegramId);
+
+    public Task<User?> GetWithRoadmapsAsync(Guid userId)
+        => _dbSet.Include(x => x.Roadmaps).FirstOrDefaultAsync(x => x.Id == userId);
 }

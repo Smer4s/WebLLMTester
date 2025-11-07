@@ -1,4 +1,4 @@
-﻿namespace Domain.Enums;
+﻿namespace Uply.Domain.Enums;
 
 public enum ManHoursPerTask
 {

@@ -1,7 +1,7 @@
-﻿using Domain.Entities.Abstract;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using Uply.Domain.Abstractions.Repositories.Abstract;
+using Uply.Domain.Entities.Abstract;
 
 namespace Uply.Infrastructure.Database.Repositories.Abstract;
 

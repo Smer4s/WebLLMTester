@@ -1,4 +1,4 @@
-﻿using Domain.Entities.Abstract;
+﻿using Uply.Domain.Entities.Abstract;
 
 namespace Uply.Domain.Abstractions.Repositories.Abstract;
 
