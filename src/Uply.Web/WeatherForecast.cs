@@ -1,4 +1,4 @@
-namespace WebLLMTester
+namespace Uply.Web
 {
     public class WeatherForecast
     {

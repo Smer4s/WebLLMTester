@@ -1,0 +1,20 @@
+﻿using Domain.Entities.Abstract;
+using Domain.Enums;
+
+namespace Domain.Entities;
+
+public class Roadmap : BaseEntity
+{
+    public string StartingPoint { get; set; } = null!;
+
+    public string Goal { get; set; } = null!;
+
+    public DateOnly? Deadline { get; set; }
+
+    public Period Period { get; set; }
+
+    public ManHoursPerTask ManHoursPerTask { get; set; }
+
+    public ICollection<RoadmapTask> Tasks { get; set; } = [];
+}
+

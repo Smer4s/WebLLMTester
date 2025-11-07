@@ -1,0 +1,6 @@
+@Uply.Web_HostAddress = http://localhost:5110
+
+GET {{Uply.Web_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
