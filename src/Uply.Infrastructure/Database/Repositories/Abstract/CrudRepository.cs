@@ -43,4 +43,6 @@ public abstract class CrudRepository<TEntity> : ICrudRepository<TEntity> where T
             await _context.SaveChangesAsync();
         }
     }
+
+    public Task<bool> IsExistsAsync(Guid id) => _dbSet.AnyAsync(x => x.Id == id);
 }

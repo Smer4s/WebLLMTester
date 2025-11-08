@@ -9,4 +9,5 @@ public interface ICrudRepository<TEntity> where TEntity : BaseEntity
     Task CreateAsync(TEntity entity);
     Task UpdateAsync(TEntity entity);
     Task DeleteAsync(Guid id);
+    Task<bool> IsExistsAsync(Guid id);
 }

@@ -28,3 +28,16 @@ public enum Period
     Every5Days
 }
 
+public static class PeriodExtensions
+{
+    public static int ToDaysCount(this Period period) 
+        => period switch
+        {
+            Period.Daily => 1,
+            Period.Every2Days => 2,
+            Period.Every3Days => 3,
+            Period.Every4Days => 4,
+            Period.Every5Days => 5,
+            _ => throw new ArgumentException(null, nameof(period))
+        };
+}

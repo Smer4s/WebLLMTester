@@ -66,6 +66,7 @@ public static class DependencyInjection
     private static IServiceCollection AddDomainServices(this IServiceCollection services)
     {
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IRoadmapService, RoadmapService>();
 
         return services;
     }
