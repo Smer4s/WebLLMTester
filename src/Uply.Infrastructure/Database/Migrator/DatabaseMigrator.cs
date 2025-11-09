@@ -11,9 +11,7 @@ public class DatabaseMigrator(AppDbContext dbContext, ILogger<DatabaseMigrator> 
     {
         try
         {
-            dbContext.Database.BeginTransaction();
             dbContext.Database.Migrate();
-            dbContext.Database.CommitTransaction();
             logger.LogInformation("Database has been successfully migrated...");
         }
         catch (Exception e)
