@@ -22,8 +22,25 @@ public static class DependencyInjection
 
     private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration config)
     {
-        services.AddDbContext<AppDbContext>(options =>
-            options.UseNpgsql(config.GetConnectionString("Postgres")));
+        if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") is "Development")
+        {
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseNpgsql(config.GetConnectionString("Postgres")));
+        }
+
+        else
+        {
+            var host = Environment.GetEnvironmentVariable("PGHOST");
+            var port = Environment.GetEnvironmentVariable("PGPORT");
+            var user = Environment.GetEnvironmentVariable("PGUSER");
+            var password = Environment.GetEnvironmentVariable("PGPASSWORD");
+            var database = Environment.GetEnvironmentVariable("PGDATABASE");
+
+            var connectionString = $"Host={host};Port={port};Username={user};Password={password};Database={database};SslMode=Require";
+
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseNpgsql(connectionString));
+        }
 
         services.AddRepositories();
 
