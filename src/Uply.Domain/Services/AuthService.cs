@@ -28,20 +28,20 @@ public class AuthService(
 
     public async Task<AuthResultDto> AuthorizeAsync(string initDataRaw)
     {
-        //if (!telegramAuthVerifyService.Verify(initDataRaw, _settings.BotToken))
-        //{
-        //    throw new UnauthorizedAccessException("Invalid Telegram signature");
-        //}
-
-        //var tgUser = telegramAuthVerifyService.ParseUser(initDataRaw);
-
-        var tgUser = new TelegramUserInfo()
+        if (!telegramAuthVerifyService.Verify(initDataRaw, _settings.BotToken))
         {
-            FirstName = "first_name",
-            Id = 228,
-            LastName = "lastnam",
-            Username = "@example"
-        };
+            throw new UnauthorizedAccessException("Invalid Telegram signature");
+        }
+
+        var tgUser = telegramAuthVerifyService.ParseUser(initDataRaw);
+
+        //var tgUser = new TelegramUserInfo()
+        //{
+        //    FirstName = "first_name",
+        //    Id = 228,
+        //    LastName = "lastnam",
+        //    Username = "@example"
+        //};
 
         var user = await userRepository.GetByTelegramIdAsync(tgUser.Id);
         if (user is null)
