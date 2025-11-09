@@ -13,5 +13,16 @@ public class Roadmap : BaseEntity
     public Period Period { get; set; }
     public ManHoursPerTask ManHoursPerTask { get; set; }
     public ICollection<RoadmapTask> Tasks { get; set; } = [];
+
+    public RoadmapTask? CurrentTask => Tasks
+        .Where(x => x.IsCompleted is false)
+        .OrderBy(x => x.CreatedAt)
+        .FirstOrDefault();
+
+    public RoadmapTask? NextTask => CurrentTask is not null 
+        ? Tasks.Where(x => x.IsCompleted is false)
+               .OrderBy(x => x.CreatedAt)
+               .FirstOrDefault(x => x.CreatedAt > CurrentTask.CreatedAt) 
+        : null;
 }
 

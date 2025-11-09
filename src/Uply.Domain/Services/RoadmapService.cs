@@ -58,6 +58,7 @@ public class RoadmapService(
                 t.IsCompleted = false;
                 t.Description = f.Lorem.Sentence(range: 10);
                 t.Title = f.Lorem.Word();
+                t.CreatedAt = DateTime.UtcNow;
             });
 
         return faker.Generate(taskAmount);

@@ -11,5 +11,5 @@ public class UserRepository(AppDbContext dbContext) : CrudRepository<User>(dbCon
         await _dbSet.FirstOrDefaultAsync(u => u.TelegramId == telegramId);
 
     public Task<User?> GetWithRoadmapsAsync(Guid userId)
-        => _dbSet.Include(x => x.Roadmaps).FirstOrDefaultAsync(x => x.Id == userId);
+        => _dbSet.Include(x => x.Roadmaps).ThenInclude(x => x.Tasks).FirstOrDefaultAsync(x => x.Id == userId);
 }

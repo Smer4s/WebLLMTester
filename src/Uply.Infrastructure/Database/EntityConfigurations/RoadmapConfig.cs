@@ -14,6 +14,9 @@ public class RoadmapConfig : IEntityTypeConfiguration<Roadmap>
         builder.HasMany(r => r.Tasks)
             .WithOne(t => t.Roadmap)
             .HasForeignKey(t => t.RoadmapId)
-            .OnDelete(DeleteBehavior.Cascade);
+           .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Ignore(x => x.CurrentTask);
+        builder.Ignore(x => x.NextTask);
     }
 }
