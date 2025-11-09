@@ -14,4 +14,22 @@ public static class WebApplicationExtensions
         var migrator = scope.ServiceProvider.GetService<IDatabaseMigrator>();
         migrator!.Migrate();
     }
+
+    public static void AddCors(this WebApplication app)
+    {
+        var allowedOrigins = app.Configuration["ALLOWED_ORIGINS"]?.Split(",") ?? [];
+
+        using var scope = app.Services.CreateScope();
+        var logger = scope.ServiceProvider.GetService<ILogger<WebApplication>>();
+
+        logger?.Log(allowedOrigins.Length > 0 ? LogLevel.Information : LogLevel.Warning, "CORS Added for origins: {origins}", string.Join(", ", allowedOrigins));
+
+        app.UseCors(options =>
+            options
+                .WithOrigins(allowedOrigins)
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials()
+        );
+    }
 }

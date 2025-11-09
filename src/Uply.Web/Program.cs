@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using System.Text.Json.Serialization;
 using Uply.Domain;
 using Uply.Infrastructure;
@@ -53,7 +54,11 @@ public static class Program
         builder.Services.AddControllers(o => o.Filters.Add<ApiExceptionFilter>())
             .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
+        builder.Services.AddLogging();
+
         var app = builder.Build();
+
+        app.AddCors();
 
         app.UseSwagger();
         app.UseSwaggerUI();
