@@ -16,8 +16,6 @@ public class DatabaseMigrator(AppDbContext dbContext, ILogger<DatabaseMigrator> 
         }
         catch (Exception e)
         {
-            dbContext.Database.RollbackTransaction();
-
             logger.LogCritical(e, "Exception occured while database migration:\r\n{message}", e.Message);
             throw;
         }
