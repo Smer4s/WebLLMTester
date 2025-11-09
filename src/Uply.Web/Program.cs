@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 using Uply.Domain;
 using Uply.Infrastructure;
+using Uply.Web.Extensions;
 using Uply.Web.Filters;
 
 namespace Uply.Web;
@@ -63,6 +64,8 @@ public static class Program
         app.UseAuthorization();
 
         app.MapControllers();
+
+        app.ApplyDatabaseMigrations();
         app.Run();
     }
 }
