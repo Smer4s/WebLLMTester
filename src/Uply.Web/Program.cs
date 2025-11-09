@@ -6,6 +6,7 @@ using Uply.Domain;
 using Uply.Infrastructure;
 using Uply.Web.Extensions;
 using Uply.Web.Filters;
+using Uply.Web.Middleware;
 
 namespace Uply.Web;
 
@@ -54,16 +55,23 @@ public static class Program
         builder.Services.AddControllers(o => o.Filters.Add<ApiExceptionFilter>())
             .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
-        builder.Services.AddLogging();
+        builder.Host.UseSerilog((context, loggerConfiguration) => loggerConfiguration.ReadFrom.Configuration(context.Configuration));
+
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Information()
+            .CreateLogger();
 
         var app = builder.Build();
 
         app.AddCors();
 
+
         app.UseSwagger();
         app.UseSwaggerUI();
 
         app.UseHttpsRedirection();
+
+        app.UseRequestLogging();
 
         app.UseAuthentication();
         app.UseAuthorization();

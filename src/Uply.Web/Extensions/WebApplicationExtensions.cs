@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using Uply.Domain.Abstractions.Services;
 using Uply.Infrastructure.Database;
 
@@ -22,7 +23,7 @@ public static class WebApplicationExtensions
         using var scope = app.Services.CreateScope();
         var logger = scope.ServiceProvider.GetService<ILogger<WebApplication>>();
 
-        logger?.Log(allowedOrigins.Length > 0 ? LogLevel.Information : LogLevel.Warning, "CORS Added for origins: {origins}", string.Join(", ", allowedOrigins));
+        Log.Logger.Information("CORS Added for origins: {origins}", string.Join(", ", allowedOrigins));
 
         app.UseCors(options =>
             options
