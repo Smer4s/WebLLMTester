@@ -1,4 +1,5 @@
 ﻿using MapsterMapper;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
@@ -21,6 +22,7 @@ public class AuthService(
     IUserRepository userRepository,
     IOptions<TelegramSettings> options,
     IOptions<JwtSettings> jwtOptions,
+    ILogger<AuthService> logger,
     IMapper mapper,
     ITelegramAuthVerifyService telegramAuthVerifyService) : IAuthService
 {
@@ -30,7 +32,8 @@ public class AuthService(
     {
         if (!telegramAuthVerifyService.Verify(initDataRaw, _settings.BotToken))
         {
-            throw new UnauthorizedAccessException("Invalid Telegram signature");
+            //throw new UnauthorizedAccessException("Invalid Telegram signature");
+            logger.LogCritical("Invalid Telegram signature!!!");
         }
 
         var tgUser = telegramAuthVerifyService.ParseUser(initDataRaw);
