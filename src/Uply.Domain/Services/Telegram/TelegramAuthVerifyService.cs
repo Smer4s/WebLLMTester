@@ -1,42 +1,81 @@
-﻿using System.Security.Cryptography;
+﻿using Microsoft.Extensions.Logging;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using Uply.Domain.Abstractions.Services.Telegram;
 using Uply.Domain.Models.Telegram;
 
 namespace Uply.Domain.Services.Telegram;
 
-public class TelegramAuthVerifyService : ITelegramAuthVerifyService
+public class TelegramAuthVerifyService(ILogger<TelegramAuthVerifyService> logger) : ITelegramAuthVerifyService
 {
-    public  bool Verify(string initDataRaw, string botToken)
+    public bool Verify(string initDataRaw, string botToken)
     {
+        var decoded = Uri.UnescapeDataString(initDataRaw);
+        logger.LogInformation("Decoded initDataRaw: {decoded}", decoded);
+
         var secretKey = SHA256.HashData(Encoding.UTF8.GetBytes(botToken));
         using var hmac = new HMACSHA256(secretKey);
 
-        var parts = initDataRaw.Split('&');
+        var parts = decoded
+             .Split('&', StringSplitOptions.RemoveEmptyEntries)
+             .Select(p => p.Split('=', 2))
+             .Where(p => p.Length == 2)
+             .ToDictionary(
+                 p => p[0],
+                 p => Uri.UnescapeDataString(p[1]).Replace(@"\/", "/") 
+             );
+
+        logger.LogInformation("Parsed parts: {parts}", string.Join(", ", parts.Select(kv => $"{kv.Key}={kv.Value}")));
+
         var dataCheckString = string.Join("\n",
-            parts.Where(p => !p.StartsWith("hash="))
-                 .OrderBy(p => p));
+            parts.Where(kv => kv.Key != "hash" && kv.Key != "signature")
+                 .OrderBy(kv => kv.Key)
+                 .Select(kv => $"{kv.Key}={kv.Value}"));
+
+
+        logger.LogInformation("DataCheckString: {dataCheckString}", dataCheckString);
 
         var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(dataCheckString));
         var computedHash = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
 
-        var receivedHash = parts.First(p => p.StartsWith("hash=")).Split('=')[1];
+        logger.LogInformation("ComputedHash: {computedHash}", computedHash);
 
-        return computedHash == receivedHash;
+        if (!parts.TryGetValue("hash", out var receivedHash))
+        {
+            logger.LogWarning("No hash found in parts");
+            return false;
+        }
+
+        logger.LogInformation("ReceivedHash: {receivedHash}", receivedHash);
+
+        var result = computedHash == receivedHash;
+        logger.LogInformation("Verification result: {result}", result);
+
+        return result;
     }
 
-    public  TelegramUserInfo ParseUser(string initDataRaw)
+
+    public TelegramUserInfo ParseUser(string initDataRaw)
     {
-        var dict = initDataRaw.Split('&')
-            .Select(p => p.Split('='))
+        var decoded = Uri.UnescapeDataString(initDataRaw);
+
+        var dict = decoded
+            .Split('&', StringSplitOptions.RemoveEmptyEntries)
+            .Select(p => p.Split('=', 2))
+            .Where(p => p.Length == 2)
             .ToDictionary(p => p[0], p => Uri.UnescapeDataString(p[1]));
 
-        return new TelegramUserInfo
-        {
-            Id = long.Parse(dict["user.id"]),
-            Username = dict.TryGetValue("user.username", out string? username) ? username : null,
-            FirstName = dict["user.first_name"],
-            LastName = dict.TryGetValue("user.last_name", out string? lastName) ? lastName : null
-        };
+        if (!dict.TryGetValue("user", out var userJson))
+            throw new InvalidOperationException("User data not found in initDataRaw");
+
+        var user = JsonSerializer.Deserialize<TelegramUserInfo>(userJson);
+
+        if (user == null)
+            throw new InvalidOperationException("Failed to parse user JSON");
+
+        return user;
     }
+
+
 }
