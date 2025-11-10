@@ -61,10 +61,23 @@ public static class Program
             .MinimumLevel.Information()
             .CreateLogger();
 
+        var allowedOrigins = builder.Configuration["ALLOWED_ORIGINS"]?.Split(",") ?? [];
+
+        Log.Logger.Information("CORS Added for origins: {origins}", string.Join(", ", allowedOrigins));
+
+        builder.Services.AddCors(options =>
+            options.AddPolicy("DefaultPolicy", builder =>
+            {
+                builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
+                builder.WithOrigins(allowedOrigins);
+                builder.SetIsOriginAllowed((host) => true);
+                builder.AllowCredentials();
+            }));
+
         var app = builder.Build();
 
-        app.AddCors();
-
+        app.UseCors("DefaultPolicy");
 
         app.UseSwagger();
         app.UseSwaggerUI();
