@@ -1,10 +1,15 @@
-﻿using Uply.Domain.Entities.Abstract;
+﻿using Uply.Domain.Common;
+using Uply.Domain.Entities.Abstract;
 using Uply.Domain.Enums;
 
 namespace Uply.Domain.Entities;
 
-public class Roadmap : BaseEntity
+public class Roadmap(List<RoadmapTask> tasks) : BaseEntity
 {
+    protected Roadmap() : this([]) { }
+
+    private readonly List<RoadmapTask> _tasks = tasks;
+
     public Guid IssuerId { get; set; }
     public User Issuer { get; set; } = null!;
     public string StartingPoint { get; set; } = null!;
@@ -12,17 +17,6 @@ public class Roadmap : BaseEntity
     public DateOnly? Deadline { get; set; }
     public Period Period { get; set; }
     public ManHoursPerTask ManHoursPerTask { get; set; }
-    public ICollection<RoadmapTask> Tasks { get; set; } = [];
 
-    public RoadmapTask? CurrentTask => Tasks
-        .Where(x => x.IsCompleted is false)
-        .OrderBy(x => x.CreatedAt)
-        .FirstOrDefault();
-
-    public RoadmapTask? NextTask => CurrentTask is not null 
-        ? Tasks.Where(x => x.IsCompleted is false)
-               .OrderBy(x => x.CreatedAt)
-               .FirstOrDefault(x => x.CreatedAt > CurrentTask.CreatedAt) 
-        : null;
+    public RoadmapTaskCollection RoadmapTasks => new(_tasks);
 }
-

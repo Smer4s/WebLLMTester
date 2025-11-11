@@ -11,12 +11,11 @@ public class RoadmapConfig : IEntityTypeConfiguration<Roadmap>
         builder.ToTable(nameof(Roadmap));
         builder.HasKey(x => x.Id);
 
-        builder.HasMany(r => r.Tasks)
+        builder.HasMany<RoadmapTask>("_tasks")
             .WithOne(t => t.Roadmap)
             .HasForeignKey(t => t.RoadmapId)
            .OnDelete(DeleteBehavior.Cascade);
 
-        builder.Ignore(x => x.CurrentTask);
-        builder.Ignore(x => x.NextTask);
+        builder.Ignore(x => x.RoadmapTasks);
     }
 }

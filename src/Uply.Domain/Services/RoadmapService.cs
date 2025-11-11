@@ -4,7 +4,7 @@ using Uply.Domain.Abstractions.Repositories;
 using Uply.Domain.Abstractions.Services;
 using Uply.Domain.Entities;
 using Uply.Domain.Enums;
-using Uply.Domain.Models.Dto;
+using Uply.Domain.Models.Dto.Roadmaps;
 using Uply.Web.Models._Roadmap_;
 
 namespace Uply.Domain.Services;
@@ -25,7 +25,7 @@ public class RoadmapService(
 
         var tasks = GetTasks(createRoadmapModel);
 
-        var roadmap = new Roadmap()
+        var roadmap = new Roadmap(tasks)
         {
             IssuerId = createRoadmapModel.IssuerId,
             Deadline = createRoadmapModel.Deadline,
@@ -33,7 +33,6 @@ public class RoadmapService(
             ManHoursPerTask = createRoadmapModel.ManHoursPerTask,
             Period = createRoadmapModel.Period,
             StartingPoint = createRoadmapModel.StartingPoint,
-            Tasks = tasks,
         };
 
         await roadmapRepository.CreateAsync(roadmap);
@@ -42,7 +41,7 @@ public class RoadmapService(
 
     }
 
-    public ICollection<RoadmapTask> GetTasks(CreateRoadmapModel createRoadmapModel)
+    public List<RoadmapTask> GetTasks(CreateRoadmapModel createRoadmapModel)
     {
         int taskAmount = DefaultTaskAmount;
         if (createRoadmapModel.Deadline.HasValue)
@@ -55,12 +54,18 @@ public class RoadmapService(
         var faker = new Faker<RoadmapTask>()
             .Rules((f, t) =>
             {
-                t.IsCompleted = false;
                 t.Description = f.Lorem.Sentence(range: 10);
                 t.Title = f.Lorem.Word();
-                t.CreatedAt = DateTime.UtcNow;
             });
 
-        return faker.Generate(taskAmount);
+        var tasks = faker.Generate(taskAmount);
+
+        for (int taskNumber = 1; taskNumber <= tasks.Count; taskNumber++)
+        {
+            var task = tasks[taskNumber - 1];
+            task.TaskNumber = taskNumber;
+        }
+
+        return tasks;
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Uply.Domain.Entities;
-using Uply.Domain.Models.Dto;
+using Uply.Domain.Models.Dto.Roadmaps;
 using Uply.Web.Models._Roadmap_;
 
 namespace Uply.Domain.Abstractions.Services;

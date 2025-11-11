@@ -9,8 +9,6 @@ namespace Uply.Web.Controllers;
 
 public class RoadmapController(IRoadmapService roadmapService) : RestApiController
 {
-    
-
     [Authorize]
     [HttpPost]
     public async Task<IActionResult> CreateRoadmap(CreateRoadmapRequest model)
