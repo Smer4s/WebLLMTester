@@ -15,6 +15,22 @@ public class RoadmapTaskController(IRoadmapTaskService roadmapTaskService) : Res
         return Ok(updatedDto);
     }
 
+    [HttpPost]
+    public async Task<IActionResult> CreateRoadmapTask(CreateRoadmapTaskDto dto)
+    {
+        await roadmapTaskService.CreateRoadmapTask(dto);
+
+        return Ok();
+    }
+
+    [HttpPut("moveTask")]
+    public async Task<IActionResult> MoveRoadmapTask(MoveRoadmapTaskDto dto)
+    {
+        await roadmapTaskService.MoveRoadmapTask(dto);
+
+        return Ok();
+    }
+
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> UpdateRoadmapTask([FromRoute] Guid id)
     {
