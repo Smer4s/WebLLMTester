@@ -1,8 +1,9 @@
 ﻿using Mapster;
 using Uply.Domain.Entities;
 using Uply.Domain.Enums;
+using Uply.Domain.Models.Dto.RoadmapTasks;
 
-namespace Uply.Domain.Models.Dto;
+namespace Uply.Domain.Models.Dto.Roadmaps;
 
 public class RoadmapFullDto : IMapFrom<Roadmap>
 {
@@ -13,12 +14,12 @@ public class RoadmapFullDto : IMapFrom<Roadmap>
     public DateOnly? Deadline { get; set; }
     public Period Period { get; set; }
     public ManHoursPerTask ManHoursPerTask { get; set; }
-    public ICollection<RoadmapTaskDto> Tasks { get; set; } = [];
+    public List<RoadmapTaskDto> Tasks { get; set; } = [];
 
     public void ConfigureMapping(TypeAdapterConfig config)
     {
         config.NewConfig<Roadmap, RoadmapFullDto>()
-            .Map(dest => dest.Tasks, src => src.Tasks)
+            .Map(dest => dest.Tasks, src => src.RoadmapTasks.OrderedTasks)
             .RequireDestinationMemberSource(true);
     }
 }

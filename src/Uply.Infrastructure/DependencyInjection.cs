@@ -52,6 +52,7 @@ public static class DependencyInjection
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRoadmapRepository, RoadmapRepository>();
         services.AddScoped<IRoadmapTaskRepository, RoadmapTaskRepository>();
+        services.AddScoped<ITaskReportRepository, TaskReportRepository>();
 
         return services;
     }

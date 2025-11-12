@@ -10,5 +10,10 @@ public class RoadmapTaskConfig : IEntityTypeConfiguration<RoadmapTask>
     {
         builder.ToTable(nameof(RoadmapTask));
         builder.HasKey(x => x.Id);
+
+        builder.HasOne(x => x.TaskReport)
+            .WithOne(x => x.Task)
+            .HasForeignKey<RoadmapTask>(x => x.TaskReportId)
+            .IsRequired(false);
     }
 }
