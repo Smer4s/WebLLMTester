@@ -14,7 +14,7 @@ public class RoadmapFullDto : IMapFrom<Roadmap>
     public DateOnly? Deadline { get; set; }
     public Period Period { get; set; }
     public ManHoursPerTask ManHoursPerTask { get; set; }
-    public List<RoadmapTaskDto> Tasks { get; set; } = [];
+    public List<RoadmapTaskSlimDto> Tasks { get; set; } = [];
 
     public void ConfigureMapping(TypeAdapterConfig config)
     {

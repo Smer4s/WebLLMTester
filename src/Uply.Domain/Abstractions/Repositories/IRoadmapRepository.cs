@@ -3,4 +3,7 @@ using Uply.Domain.Entities;
 
 namespace Uply.Domain.Abstractions.Repositories;
 
-public interface IRoadmapRepository : ICrudRepository<Roadmap>;
+public interface IRoadmapRepository : ICrudRepository<Roadmap>
+{
+    Task<Roadmap?> GetRoadmapByIdAsyncWithIncludes(Guid id);
+}

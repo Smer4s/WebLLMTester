@@ -29,4 +29,12 @@ public class RoadmapController(IRoadmapService roadmapService) : RestApiControll
 
         return Ok(roadmap);
     }
+
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetRoadmap([FromRoute] Guid id)
+    {
+        var roadmap = await roadmapService.GetRoadmap(id);
+
+        return Ok(roadmap);
+    }
 }

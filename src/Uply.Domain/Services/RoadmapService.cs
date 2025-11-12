@@ -2,6 +2,7 @@
 using MapsterMapper;
 using Uply.Domain.Abstractions.Repositories;
 using Uply.Domain.Abstractions.Services;
+using Uply.Domain.Constants;
 using Uply.Domain.Entities;
 using Uply.Domain.Enums;
 using Uply.Domain.Models.Dto.Roadmaps;
@@ -14,7 +15,17 @@ public class RoadmapService(
     IRoadmapRepository roadmapRepository,
     IMapper mapper) : IRoadmapService
 {
-    private const int DefaultTaskAmount = 30;
+    public async Task<RoadmapFullDto> GetRoadmap(Guid roadmapId)
+    {
+        var roadmap = await roadmapRepository.GetRoadmapByIdAsyncWithIncludes(roadmapId);
+
+        if (roadmap == null)
+        {
+            throw new ArgumentNullException("Роудмап не был найден");
+        }
+
+        return mapper.Map<RoadmapFullDto>(roadmap);
+    }
 
     public async Task<RoadmapFullDto> CreateRoadmapAsync(CreateRoadmapModel createRoadmapModel)
     {
@@ -43,7 +54,7 @@ public class RoadmapService(
 
     public List<RoadmapTask> GetTasks(CreateRoadmapModel createRoadmapModel)
     {
-        int taskAmount = DefaultTaskAmount;
+        int taskAmount = RoadmapConstants.MaxTasksInRoadmap;
         if (createRoadmapModel.Deadline.HasValue)
         {
             var daysRemain = (int)(createRoadmapModel.Deadline.Value.ToDateTime(TimeOnly.MinValue) - DateTime.Today).TotalDays;
