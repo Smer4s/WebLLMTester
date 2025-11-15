@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Uply.Domain.Abstractions.Repositories;
 using Uply.Domain.Abstractions.Services;
+using Uply.Infrastructure.ChatGpt;
 using Uply.Infrastructure.Database;
 using Uply.Infrastructure.Database.Migrator;
 using Uply.Infrastructure.Database.Repositories;
@@ -16,6 +17,22 @@ public static class DependencyInjection
         services.AddDatabase(config);
 
         services.AddScoped<IDatabaseMigrator, DatabaseMigrator>();
+
+        services.AddChatGpt(config);
+
+        return services;
+    }
+
+    private static IServiceCollection AddChatGpt(this IServiceCollection services, IConfiguration config)
+    {
+        services.AddHttpClient();
+        services.Configure<ChatGptOptions>(opt =>
+        {
+            opt.Model = Environment.GetEnvironmentVariable("CHATGPT_MODEL")!;
+            opt.ApiKey = Environment.GetEnvironmentVariable("CHATGPT_APIKEY")!;
+        });
+
+        services.AddSingleton<IChatGptClient, ChatGptClient>();
 
         return services;
     }

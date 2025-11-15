@@ -16,7 +16,9 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ALLOWED_ORIGINS": ""
+        "ALLOWED_ORIGINS": "",
+        "CHATGPT_APIKEY": "",
+        "CHATGPT_MODEL": ""
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7109;http://localhost:5073"

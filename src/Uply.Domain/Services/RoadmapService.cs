@@ -13,6 +13,7 @@ namespace Uply.Domain.Services;
 public class RoadmapService(
     IUserRepository userRepository,
     IRoadmapRepository roadmapRepository,
+    IChatGptClient chatGptClient,
     IMapper mapper) : IRoadmapService
 {
     public async Task<RoadmapFullDto> GetRoadmap(Guid roadmapId)
@@ -34,7 +35,7 @@ public class RoadmapService(
             throw new Exception("Not existing user");
         }
 
-        var tasks = GetTasks(createRoadmapModel);
+        var tasks = await chatGptClient.GenerateRoadmapTasksAsync(createRoadmapModel);
 
         var roadmap = new Roadmap(tasks)
         {
