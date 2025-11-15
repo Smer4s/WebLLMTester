@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Uply.Domain.Abstractions.Services;
+using Uply.Domain.Models.Dto.Roadmaps;
+using Uply.Domain.Models.Dto.UserDtos;
 using Uply.Web.Controllers.Abstract;
 using Uply.Web.Extensions;
 
@@ -10,6 +12,7 @@ public class UserController(IUserService userService) : RestApiController
 {
     [Authorize]
     [HttpGet("me")]
+    [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetUserWithRoadmaps()
     {
         var id = User.GetId();

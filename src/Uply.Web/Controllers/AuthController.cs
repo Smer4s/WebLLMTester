@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Uply.Domain.Abstractions.Services;
+using Uply.Domain.Models.Dto;
 using Uply.Domain.Services;
 using Uply.Web.Controllers.Abstract;
 
@@ -9,6 +10,7 @@ namespace Uply.Web.Controllers;
 public class AuthController(IAuthService authService) : RestApiController
 {
     [HttpPost("login")]
+    [ProducesResponseType(typeof(AuthResultDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Authorize([FromQuery] string initDataRaw)
     {
         var user = await authService.AuthorizeAsync(initDataRaw);
@@ -17,6 +19,7 @@ public class AuthController(IAuthService authService) : RestApiController
     }
 
     [HttpPost("refresh")]
+    [ProducesResponseType(typeof(AuthResultDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Refresh([FromQuery] string refreshToken)
     {
         var result = await authService.RefreshAsync(refreshToken);

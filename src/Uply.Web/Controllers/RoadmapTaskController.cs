@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Uply.Domain.Abstractions.Services;
+using Uply.Domain.Models.Dto.Roadmaps;
+using Uply.Domain.Models.Dto.RoadmapTasks;
 using Uply.Domain.Models.Dto.RoadmapTasks.Commands;
 using Uply.Web.Controllers.Abstract;
 
@@ -8,6 +10,7 @@ namespace Uply.Web.Controllers;
 public class RoadmapTaskController(IRoadmapTaskService roadmapTaskService) : RestApiController
 {
     [HttpPut]
+    [ProducesResponseType(typeof(RoadmapTaskDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> UpdateRoadmapTask(UpdateRoadmapTaskDto dto)
     {
         var updatedDto = await roadmapTaskService.UpdateRoadmapTask(dto);
