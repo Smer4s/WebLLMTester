@@ -20,7 +20,7 @@ public class RoadmapTaskCollection
 
     public void InsertTask(RoadmapTask taskToInsert)
     {
-        if (IsRoadmapFull) 
+        if (IsRoadmapFull)
         {
             throw new InvalidOperationException($"Невозможно добавить новую задачу. Роадмап уже заполнен. Максимальное число задач:{RoadmapConstants.MaxTasksInRoadmap}");
         }
@@ -74,7 +74,8 @@ public class RoadmapTaskCollection
     public RoadmapTask? CurrentTask => _taskCollection
         .Where(x => x.IsCompleted is false)
         .OrderBy(x => x.TaskNumber)
-        .FirstOrDefault();
+        .FirstOrDefault()
+        ?? _taskCollection.FirstOrDefault();
 
     public RoadmapTask? NextTask => CurrentTask is not null
         ? _taskCollection.FirstOrDefault(x => x.TaskNumber == 1 + CurrentTask.TaskNumber)
