@@ -20,6 +20,7 @@ public class RoadmapController(IRoadmapService roadmapService) : RestApiControll
 
         var createModel = new CreateRoadmapModel()
         {
+            Title = model.Title,
             IssuerId = userId,
             Deadline = model.Deadline,
             Goal = model.Goal,

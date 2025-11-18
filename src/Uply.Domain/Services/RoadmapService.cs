@@ -35,7 +35,7 @@ public class RoadmapService(
             throw new Exception("Not existing user");
         }
 
-        var tasks = await chatGptClient.GenerateRoadmapTasksAsync(createRoadmapModel);
+        var tasks = new List<RoadmapTask>(); //await chatGptClient.GenerateRoadmapTasksAsync(createRoadmapModel);
 
         var roadmap = new Roadmap(tasks)
         {
