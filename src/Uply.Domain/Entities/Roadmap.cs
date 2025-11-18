@@ -11,7 +11,8 @@ public class Roadmap(List<RoadmapTask> tasks) : BaseEntity
     private readonly List<RoadmapTask> _tasks = tasks;
 
     public Guid IssuerId { get; set; }
-    public User Issuer { get; set; } = null!;
+    public User Issuer { get; set; } = null!; 
+    public string Title { get; set; } = null!;
     public string StartingPoint { get; set; } = null!;
     public string Goal { get; set; } = null!;
     public DateOnly? Deadline { get; set; }

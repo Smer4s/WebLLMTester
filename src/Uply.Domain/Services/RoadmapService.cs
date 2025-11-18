@@ -39,6 +39,7 @@ public class RoadmapService(
 
         var roadmap = new Roadmap(tasks)
         {
+            Title = createRoadmapModel.Title,
             IssuerId = createRoadmapModel.IssuerId,
             Deadline = createRoadmapModel.Deadline,
             Goal = createRoadmapModel.Goal,

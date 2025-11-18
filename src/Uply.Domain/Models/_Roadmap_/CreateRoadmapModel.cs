@@ -5,6 +5,7 @@ namespace Uply.Web.Models._Roadmap_;
 public record CreateRoadmapModel
 {
     public Guid IssuerId { get; set; }
+    public string Title { get; set; } = null!;
     public string StartingPoint { get; set; } = null!;
     public string Goal { get; set; } = null!;
     public DateOnly? Deadline { get; set; }
