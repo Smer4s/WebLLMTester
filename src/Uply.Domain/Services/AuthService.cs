@@ -38,14 +38,6 @@ public class AuthService(
 
         var tgUser = telegramAuthVerifyService.ParseUser(initDataRaw);
 
-        //var tgUser = new TelegramUserInfo()
-        //{
-        //    FirstName = "first_name",
-        //    Id = 228,
-        //    LastName = "lastnam",
-        //    Username = "@example"
-        //};
-
         var user = await userRepository.GetByTelegramIdAsync(tgUser.Id);
         if (user is null)
         {
@@ -56,7 +48,8 @@ public class AuthService(
                 FirstName = tgUser.FirstName,
                 LastName = tgUser.LastName,
                 CreatedAt = DateTime.UtcNow,
-                LastLoginAt = DateTime.UtcNow
+                LastLoginAt = DateTime.UtcNow,
+                PhotoUrl = tgUser.PhotoUrl,
             };
 
             await userRepository.CreateAsync(user);

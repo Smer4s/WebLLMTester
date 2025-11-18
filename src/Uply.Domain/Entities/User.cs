@@ -14,6 +14,7 @@ public class User : BaseEntity
     public string? LastName { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime LastLoginAt { get; set; }
+    public string? PhotoUrl { get; set; }
 
     public ICollection<Roadmap> Roadmaps { get; set; } = [];
 }

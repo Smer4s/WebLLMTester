@@ -10,6 +10,7 @@ public class UserDto : IMapFrom<User>
     public string? Username { get; set; }
     public required string FirstName { get; set; }
     public string? LastName { get; set; }
+    public string? PhotoUrl { get; set; }
 
     public ICollection<RoadmapSlimDto> Roadmaps { get; set; } = [];
 

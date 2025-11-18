@@ -15,4 +15,7 @@ public record TelegramUserInfo
 
     [JsonPropertyName("last_name")]
     public string? LastName { get; set; }
+
+    [JsonPropertyName("photo_url")]
+    public string? PhotoUrl { get; set; }
 }
