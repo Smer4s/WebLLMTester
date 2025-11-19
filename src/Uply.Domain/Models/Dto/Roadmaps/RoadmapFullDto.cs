@@ -8,6 +8,7 @@ namespace Uply.Domain.Models.Dto.Roadmaps;
 public class RoadmapFullDto : IMapFrom<Roadmap>
 {
     public Guid Id { get; set; }
+    public required string Title { get; set; }
     public Guid IssuerId { get; set; }
     public string StartingPoint { get; set; } = null!;
     public string Goal { get; set; } = null!;

@@ -8,6 +8,7 @@ namespace Uply.Domain.Models.Dto.Roadmaps;
 public class RoadmapSlimDto : IMapFrom<Roadmap>
 {
     public Guid Id { get; set; }
+    public required string Title { get; set; }
     public required string StartingPoint { get; set; }
     public required string Goal { get; set; }
     public DateOnly? Deadline { get; set; }
