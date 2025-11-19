@@ -8,4 +8,5 @@ public interface IRoadmapService
 {
     Task<RoadmapFullDto> CreateRoadmapAsync(CreateRoadmapModel createModel);
     Task<RoadmapFullDto> GetRoadmap(Guid roadmapId);
+    Task DeleteRoadmap(Guid roadmapId);
 }

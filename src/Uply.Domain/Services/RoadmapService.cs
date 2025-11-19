@@ -81,4 +81,16 @@ public class RoadmapService(
 
         return tasks;
     }
+
+    public async Task DeleteRoadmap(Guid roadmapId)
+    {
+        var roadMap = await roadmapRepository.GetByIdAsync(roadmapId);
+
+        if (roadMap is null)
+        {
+            throw new Exception("Not existing roadMap");
+        }
+
+        await roadmapRepository.DeleteAsync(roadmapId);
+    }
 }

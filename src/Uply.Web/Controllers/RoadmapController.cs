@@ -42,4 +42,12 @@ public class RoadmapController(IRoadmapService roadmapService) : RestApiControll
 
         return Ok(roadmap);
     }
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteRoadmap([FromRoute] Guid id)
+    {
+        await roadmapService.DeleteRoadmap(id);
+
+        return Ok();
+    }
 }
