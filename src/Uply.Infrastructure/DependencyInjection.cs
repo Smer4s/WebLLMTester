@@ -34,13 +34,14 @@ public static class DependencyInjection
         services.AddMinio(configureClient =>
         {
             var useSSL = bool.Parse(Environment.GetEnvironmentVariable("MINIO_USE_SSL")!);
-            var endpoint = Environment.GetEnvironmentVariable("MINIO_ENDPOINT")!;
+            var host = Environment.GetEnvironmentVariable("MINIO_HOST")!;
+            var port = int.Parse(Environment.GetEnvironmentVariable("MINIO_PORT")!);
             var accessKey = Environment.GetEnvironmentVariable("MINIO_SERVER_ACCESS_KEY")!;
             var secretKey = Environment.GetEnvironmentVariable("MINIO_SERVER_SECRET_KEY")!;
 
             configureClient
                 .WithSSL(useSSL)
-                .WithEndpoint(endpoint)
+                .WithEndpoint(host, port)
                 .WithCredentials(accessKey, secretKey)
                 .Build();
         });
