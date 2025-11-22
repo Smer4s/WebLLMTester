@@ -16,18 +16,11 @@ public class RoadmapTaskCollection
         }
     }
 
-    private bool IsRoadmapFull => _taskCollection.Count == RoadmapConstants.MaxTasksInRoadmap;
-
     public void InsertTask(RoadmapTask taskToInsert)
     {
-        if (IsRoadmapFull)
-        {
-            throw new InvalidOperationException($"Невозможно добавить новую задачу. Роадмап уже заполнен. Максимальное число задач:{RoadmapConstants.MaxTasksInRoadmap}");
-        }
-
         _taskCollection.Add(taskToInsert);
 
-        MoveTask(taskToInsert.Id, taskToInsert.TaskNumber);
+        MoveTask(taskToInsert.Id, taskToInsert.TaskNumber - 1);
 
         ReorderTasks();
     }

@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uply.Infrastructure", "src\Uply.Infrastructure\Uply.Infrastructure.csproj", "{1BA584B3-515B-431F-B536-3857FB9E231F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Uply.Infrastructure", "src\Uply.Infrastructure\Uply.Infrastructure.csproj", "{1BA584B3-515B-431F-B536-3857FB9E231F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uply.Domain", "src\Uply.Domain\Uply.Domain.csproj", "{AE320243-EBDF-4136-A22F-0BE37CBAE150}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Uply.Domain", "src\Uply.Domain\Uply.Domain.csproj", "{AE320243-EBDF-4136-A22F-0BE37CBAE150}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uply.Web", "src\Uply.Web\Uply.Web.csproj", "{CE868933-FCA4-4FD6-91EB-58621472C85C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Uply.Web", "src\Uply.Web\Uply.Web.csproj", "{CE868933-FCA4-4FD6-91EB-58621472C85C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uply.Tests", "Uply.Tests\Uply.Tests.csproj", "{C566977C-5B86-41C8-94B2-BCA87E32D98A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1528F16C-F27A-4D6A-B1C6-82669592C686}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1528F16C-F27A-4D6A-B1C6-82669592C686}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1528F16C-F27A-4D6A-B1C6-82669592C686}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1528F16C-F27A-4D6A-B1C6-82669592C686}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1BA584B3-515B-431F-B536-3857FB9E231F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1BA584B3-515B-431F-B536-3857FB9E231F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BA584B3-515B-431F-B536-3857FB9E231F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -31,6 +29,10 @@ Global
 		{CE868933-FCA4-4FD6-91EB-58621472C85C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE868933-FCA4-4FD6-91EB-58621472C85C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE868933-FCA4-4FD6-91EB-58621472C85C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C566977C-5B86-41C8-94B2-BCA87E32D98A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C566977C-5B86-41C8-94B2-BCA87E32D98A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C566977C-5B86-41C8-94B2-BCA87E32D98A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C566977C-5B86-41C8-94B2-BCA87E32D98A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
