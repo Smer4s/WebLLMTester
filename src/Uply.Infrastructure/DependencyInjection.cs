@@ -1,8 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Application.Abstractions.Services.Minio;
+using Infrastructure.Minio;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Minio;
 using Uply.Domain.Abstractions.Repositories;
 using Uply.Domain.Abstractions.Services;
+using Uply.Domain.Services._Minio_;
 using Uply.Infrastructure.ChatGpt;
 using Uply.Infrastructure.Database;
 using Uply.Infrastructure.Database.Migrator;
@@ -19,6 +23,30 @@ public static class DependencyInjection
         services.AddScoped<IDatabaseMigrator, DatabaseMigrator>();
 
         services.AddChatGpt(config);
+
+        services.AddFileStorage();
+
+        return services;
+    }
+
+    private static IServiceCollection AddFileStorage(this IServiceCollection services)
+    {
+        services.AddMinio(configureClient =>
+        {
+            var useSSL = bool.Parse(Environment.GetEnvironmentVariable("MINIO_USE_SSL")!);
+            var endpoint = Environment.GetEnvironmentVariable("MINIO_ENDPOINT")!;
+            var accessKey = Environment.GetEnvironmentVariable("MINIO_SERVER_ACCESS_KEY")!;
+            var secretKey = Environment.GetEnvironmentVariable("MINIO_SERVER_SECRET_KEY")!;
+
+            configureClient
+                .WithSSL(useSSL)
+                .WithEndpoint(endpoint)
+                .WithCredentials(accessKey, secretKey)
+                .Build();
+        });
+
+        services.AddScoped<IMinioService, MinioService>();
+        services.AddScoped<IMinioBucketBuilder, MinioBucketBuilder>();
 
         return services;
     }

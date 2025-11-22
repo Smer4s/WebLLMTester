@@ -1,13 +1,17 @@
-﻿using Mapster;
+﻿using Application.Abstractions.Services.Minio;
+using Infrastructure.Minio;
+using Mapster;
 using Mapster.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Minio;
 using System.Text;
 using Uply.Domain.Abstractions.Services;
 using Uply.Domain.Abstractions.Services.Telegram;
 using Uply.Domain.Services;
+using Uply.Domain.Services._Minio_;
 using Uply.Domain.Services.Telegram;
 using Uply.Domain.Settings;
 
