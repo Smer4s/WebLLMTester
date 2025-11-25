@@ -68,7 +68,7 @@ public class RoadmapTaskService(
 
     public async Task<RoadmapTaskDto> UpdateRoadmapTask(UpdateRoadmapTaskDto updateDto)
     {
-        var taskToUpdate = await roadmapTaskRepository.GetByIdAsync(updateDto.Id);
+        var taskToUpdate = await roadmapTaskRepository.GetByIdWithIncludes(updateDto.Id);
         if (taskToUpdate is null)
         {
             throw new ArgumentNullException("Задача не была найдена");

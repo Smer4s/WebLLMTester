@@ -35,7 +35,7 @@ public class RoadmapTaskController(IRoadmapTaskService roadmapTaskService) : Res
     }
 
     [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> UpdateRoadmapTask([FromRoute] Guid id)
+    public async Task<IActionResult> DeleteRoadmapTask([FromRoute] Guid id)
     {
         await roadmapTaskService.DeleteRoadmapTask(id);
 

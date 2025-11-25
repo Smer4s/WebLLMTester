@@ -28,6 +28,18 @@ public class RoadmapService(
         return mapper.Map<RoadmapFullDto>(roadmap);
     }
 
+    public async Task<RoadmapProgressDto> GetProgressRoadmap(Guid roadmapId)
+    {
+        var roadmap = await roadmapRepository.GetRoadmapByIdAsyncWithIncludes(roadmapId);
+
+        if (roadmap == null)
+        {
+            throw new ArgumentNullException("Роудмап не был найден");
+        }
+
+        return mapper.Map<RoadmapProgressDto>(roadmap);
+    }
+
     public async Task<RoadmapFullDto> CreateRoadmapAsync(CreateRoadmapModel createRoadmapModel)
     {
         if (await userRepository.IsExistsAsync(createRoadmapModel.IssuerId) is false)
@@ -46,6 +58,7 @@ public class RoadmapService(
             ManHoursPerTask = createRoadmapModel.ManHoursPerTask,
             Period = createRoadmapModel.Period,
             StartingPoint = createRoadmapModel.StartingPoint,
+            Start = DateTime.UtcNow
         };
 
         await roadmapRepository.CreateAsync(roadmap);

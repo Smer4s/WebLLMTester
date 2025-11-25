@@ -1,5 +1,4 @@
 ﻿using Mapster;
-using Uply.Domain.Common.Exstensions;
 using Uply.Domain.Entities;
 
 namespace Uply.Domain.Models.Dto.RoadmapTasks;
@@ -18,8 +17,6 @@ public class RoadmapTaskDto : IMapFrom<RoadmapTask>
     {
         config.NewConfig<RoadmapTask, RoadmapTaskDto>()
             .Map(dest => dest.IsCompleted, src => src.IsCompleted)
-            .Map(dest => dest.TaskReport, src => MapContext.Current == null 
-                ? null 
-                : MapContext.Current!.Parameters.TryGetValue<TaskReportDto?>("TaskReport"));
+            .Map(dest => dest.TaskReport, src => src.TaskReport);
     }
 }

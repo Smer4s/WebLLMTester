@@ -75,4 +75,7 @@ public class RoadmapTaskCollection
         : null;
 
     public List<RoadmapTask> OrderedTasks => _taskCollection;
+
+    public int TotalTaskCount => _taskCollection.Count;
+    public int CompletedCount => _taskCollection.Where(x => x.IsCompleted).Count();
 }

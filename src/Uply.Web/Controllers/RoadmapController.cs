@@ -43,6 +43,15 @@ public class RoadmapController(IRoadmapService roadmapService) : RestApiControll
         return Ok(roadmap);
     }
 
+    [HttpGet("progress/{id:guid}")]
+    [ProducesResponseType(typeof(RoadmapProgressDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetProgressRoadmap([FromRoute] Guid id)
+    {
+        var roadmap = await roadmapService.GetRoadmap(id);
+
+        return Ok(roadmap);
+    }
+
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteRoadmap([FromRoute] Guid id)
     {
