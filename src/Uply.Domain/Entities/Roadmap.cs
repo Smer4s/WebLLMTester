@@ -21,5 +21,7 @@ public class Roadmap(List<RoadmapTask> tasks) : BaseEntity
 	public DateTime Start { get; set; }
 	public bool IsDuo { get; set; }
 
+	public DateTime LastRoadmapActivity { get; set; }
+
 	public RoadmapTaskCollection RoadmapTasks => new(_tasks);
 }

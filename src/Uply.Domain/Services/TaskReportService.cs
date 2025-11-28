@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.TagHelpers.Cache;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,35 +13,39 @@ namespace Uply.Domain.Services;
 
 public class TaskReportService(ITaskReportRepository reportRepository, IRoadmapTaskRepository taskRepository) : ITaskReportService
 {
-    public async Task<TaskReport> CreateReportAsync(CreateRoadmapReportDto dto)
-    {
-        var task = await taskRepository.GetByIdWithIncludes(dto.RoadmapTaskId) ?? throw new InvalidOperationException("Задача не найдена");
+	public async Task<TaskReport> CreateReportAsync(CreateRoadmapReportDto dto)
+	{
+		var task = await taskRepository.GetByIdWithIncludes(dto.RoadmapTaskId) ?? throw new InvalidOperationException("Задача не найдена");
 
-        var report = new TaskReport
-        {
-            Id = Guid.NewGuid(),
-            Description = dto.Description,
-            PhotoUrls = dto.PhotoUrls,
-            Task = task
-        };
+		var report = new TaskReport
+		{
+			Id = Guid.NewGuid(),
+			Description = dto.Description,
+			PhotoUrls = dto.PhotoUrls,
+			Task = task
+		};
 
-        task.TaskReport = report;
-        task.TaskReportId = report.Id;
+		task.TaskReport = report;
+		task.TaskReportId = report.Id;
 
-        await reportRepository.CreateAsync(report);
-        await taskRepository.UpdateAsync(task);
+		task.Roadmap.LastRoadmapActivity = DateTime.UtcNow;
 
-        return report;
-    }
+		await reportRepository.CreateAsync(report);
+		await taskRepository.UpdateAsync(task);
 
-    public async Task<TaskReport> UpdateReportAsync(Guid reportId, string? description, ICollection<string> photoUrls)
-    {
-        var report = await reportRepository.GetByIdAsync(reportId) ?? throw new InvalidOperationException("Отчёт не найден");
-        report.Description = description;
-        report.PhotoUrls = photoUrls;
+		return report;
+	}
 
-        await reportRepository.UpdateAsync(report);
+	public async Task<TaskReport> UpdateReportAsync(Guid reportId, string? description, ICollection<string> photoUrls)
+	{
+		var report = await reportRepository.GetByIdAsync(reportId) ?? throw new InvalidOperationException("Отчёт не найден");
+		report.Description = description;
+		report.PhotoUrls = photoUrls;
 
-        return report;
-    }
+		report.Task.Roadmap.LastRoadmapActivity = DateTime.UtcNow;
+
+		await reportRepository.UpdateAsync(report);
+
+		return report;
+	}
 }
