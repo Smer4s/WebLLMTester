@@ -7,4 +7,5 @@ public interface IUserRepository : ICrudRepository<User>
 {
     Task<User?> GetByTelegramIdAsync(long telegramId);
     Task<User?> GetWithRoadmapsAsync(Guid userId);
+	Task<User?> GetWithRoadmapsProgressAsync(Guid userId);
 }

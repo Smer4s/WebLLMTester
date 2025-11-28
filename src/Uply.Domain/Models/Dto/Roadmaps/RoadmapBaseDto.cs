@@ -18,4 +18,11 @@ public class RoadmapBaseDto : IMapFrom<Roadmap>
 	public Period Period { get; set; }
 
 	public bool IsDuo { get; set; }
+
+	public void ConfigureMapping(TypeAdapterConfig config)
+	{
+		config.NewConfig<Roadmap, RoadmapBaseDto>()
+			.Map(dest => dest.CurrentTask, src => src.RoadmapTasks.CurrentTask)
+			.Map(dest => dest.NextTask, src => src.RoadmapTasks.NextTask);
+	}
 }

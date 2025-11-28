@@ -7,11 +7,17 @@ namespace Uply.Infrastructure.Database.Repositories;
 
 public class UserRepository(AppDbContext dbContext) : CrudRepository<User>(dbContext), IUserRepository
 {
-    public async Task<User?> GetByTelegramIdAsync(long telegramId) =>
-        await _dbSet.FirstOrDefaultAsync(u => u.TelegramId == telegramId);
+	public async Task<User?> GetByTelegramIdAsync(long telegramId) =>
+		await _dbSet.FirstOrDefaultAsync(u => u.TelegramId == telegramId);
 
-    public Task<User?> GetWithRoadmapsAsync(Guid userId)
-        => _dbSet.Include(x => x.Roadmaps)
-            .ThenInclude(x => EF.Property<List<RoadmapTask>>(x, "_tasks"))
-            .FirstOrDefaultAsync(x => x.Id == userId);
+	public Task<User?> GetWithRoadmapsAsync(Guid userId)
+		=> _dbSet.Include(x => x.Roadmaps)
+			.ThenInclude(x => EF.Property<List<RoadmapTask>>(x, "_tasks"))
+			.FirstOrDefaultAsync(x => x.Id == userId);
+
+	public Task<User?> GetWithRoadmapsProgressAsync(Guid userId)
+		=> _dbSet.Include(x => x.Roadmaps)
+			.ThenInclude(x => EF.Property<List<RoadmapTask>>(x, "_tasks"))
+			.ThenInclude(x => x.TaskReport)
+			.FirstOrDefaultAsync(x => x.Id == userId);
 }

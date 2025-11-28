@@ -21,4 +21,16 @@ public class UserController(IUserService userService) : RestApiController
 
         return Ok(user);
     }
+
+	[Authorize]
+	[HttpGet("me/progress")]
+	[ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
+	public async Task<IActionResult> GetUserWithRoadmapsProgress()
+	{
+		var id = User.GetId();
+
+		var user = await userService.GetUserWithRoadmaps(id);
+
+		return Ok(user);
+	}
 }
