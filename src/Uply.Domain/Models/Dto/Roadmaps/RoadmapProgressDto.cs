@@ -1,11 +1,24 @@
 ﻿using Mapster;
 using Uply.Domain.Entities;
+using Uply.Domain.Enums;
 using Uply.Domain.Models.Dto.RoadmapTasks;
 
 namespace Uply.Domain.Models.Dto.Roadmaps;
 
-public class RoadmapProgressDto : RoadmapBaseDto
+public class RoadmapProgressDto : IMapFrom<Roadmap>
 {
+	public Guid Id { get; set; }
+	public required string StartingPoint { get; set; }
+	public required string Title { get; set; }
+	public required string Goal { get; set; }
+	public DateOnly? Deadline { get; set; }
+	public RoadmapTaskDto? CurrentTask { get; set; }
+	public ManHoursPerTask ManHoursPerTask { get; set; }
+	public RoadmapTaskDto? NextTask { get; set; }
+	public Period Period { get; set; }
+
+	public bool IsDuo { get; set; }
+
 	public Guid IssuerId { get; set; }
 
 	public int Days { get; init; }
@@ -23,6 +36,8 @@ public class RoadmapProgressDto : RoadmapBaseDto
 			.Map(dest => dest.TotalTaskCount, src => src.RoadmapTasks.TotalTaskCount)
 			.Map(dest => dest.CompletedCount, src => src.RoadmapTasks.CompletedCount)
 			.Map(dest => dest.CompletedPercent, src => src.RoadmapTasks.CompletedPercent)
+			.Map(dest => dest.CurrentTask, src => src.RoadmapTasks.CurrentTask)
+			.Map(dest => dest.NextTask, src => src.RoadmapTasks.NextTask)
 			.RequireDestinationMemberSource(true);
 	}
 }
