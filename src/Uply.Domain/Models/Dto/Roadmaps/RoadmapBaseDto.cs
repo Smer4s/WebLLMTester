@@ -16,4 +16,6 @@ public abstract class RoadmapBaseDto : IMapFrom<Roadmap>
 	public ManHoursPerTask ManHoursPerTask { get; set; }
 	public RoadmapTaskDto? NextTask { get; set; }
 	public Period Period { get; set; }
+
+	public bool IsDuo { get; set; }
 }
