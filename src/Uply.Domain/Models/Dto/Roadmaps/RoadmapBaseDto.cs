@@ -5,7 +5,7 @@ using Uply.Domain.Models.Dto.RoadmapTasks;
 
 namespace Uply.Domain.Models.Dto.Roadmaps;
 
-public abstract class RoadmapBaseDto : IMapFrom<Roadmap>
+public class RoadmapBaseDto : IMapFrom<Roadmap>
 {
 	public Guid Id { get; set; }
 	public required string StartingPoint { get; set; }
