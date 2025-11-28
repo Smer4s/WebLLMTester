@@ -15,17 +15,19 @@ public class UserService(IUserRepository userRepository, IMapper mapper) : IUser
 			return null;
 		}
 
+		user.Roadmaps = user.Roadmaps.OrderByDescending(x => x.LastRoadmapActivity).ToList();
+
 		return mapper.Map<UserProgressDto>(user);
 	}
 
 	public async Task<UserDto?> GetUserWithRoadmaps(Guid userId)
-    {
-        var user = await userRepository.GetWithRoadmapsAsync(userId);
-        if (user == null)
-        {
-            return null;
-        }
+	{
+		var user = await userRepository.GetWithRoadmapsAsync(userId);
+		if (user == null)
+		{
+			return null;
+		}
 
-        return mapper.Map<UserDto>(user);
-    }
+		return mapper.Map<UserDto>(user);
+	}
 }
