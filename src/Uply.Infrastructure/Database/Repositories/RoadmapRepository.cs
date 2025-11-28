@@ -7,10 +7,11 @@ namespace Uply.Infrastructure.Database.Repositories;
 
 public class RoadmapRepository(AppDbContext context) : CrudRepository<Roadmap>(context), IRoadmapRepository
 {
-    public async Task<Roadmap?> GetRoadmapByIdAsyncWithIncludes(Guid id)
-    {
-        return await _dbSet
-            .Include("_tasks")
-            .FirstOrDefaultAsync(x => x.Id == id);
-    }
+	public async Task<Roadmap?> GetRoadmapByIdAsyncWithIncludes(Guid id)
+	{
+		return await _dbSet
+			.Include(x => EF.Property<List<RoadmapTask>>(x, "_tasks"))
+			.ThenInclude(x => x.TaskReport)
+			.FirstOrDefaultAsync(x => x.Id == id);
+	}
 }
