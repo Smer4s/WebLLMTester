@@ -5,16 +5,10 @@ using Uply.Domain.Models.Dto.RoadmapTasks;
 
 namespace Uply.Domain.Models.Dto.Roadmaps;
 
-public class RoadmapFullDto : IMapFrom<Roadmap>
+public class RoadmapFullDto : RoadmapBaseDto
 {
-    public Guid Id { get; set; }
-    public required string Title { get; set; }
     public Guid IssuerId { get; set; }
-    public string StartingPoint { get; set; } = null!;
-    public string Goal { get; set; } = null!;
-    public DateOnly? Deadline { get; set; }
-    public Period Period { get; set; }
-    public ManHoursPerTask ManHoursPerTask { get; set; }
+
     public List<RoadmapTaskSlimDto> Tasks { get; set; } = [];
 
     public void ConfigureMapping(TypeAdapterConfig config)
