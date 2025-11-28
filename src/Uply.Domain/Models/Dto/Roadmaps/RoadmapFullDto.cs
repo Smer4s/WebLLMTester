@@ -20,7 +20,7 @@ public class RoadmapFullDto : IMapFrom<Roadmap>
 	public bool IsDuo { get; set; }
 	public Guid IssuerId { get; set; }
 
-    public List<RoadmapTaskSlimDto> Tasks { get; set; } = [];
+    public List<RoadmapTaskDto> Tasks { get; set; } = [];
 
     public void ConfigureMapping(TypeAdapterConfig config)
     {
