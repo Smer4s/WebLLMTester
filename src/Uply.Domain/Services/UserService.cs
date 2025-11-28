@@ -7,7 +7,7 @@ namespace Uply.Domain.Services;
 
 public class UserService(IUserRepository userRepository, IMapper mapper) : IUserService
 {
-	public async Task<UserProgressDto?> GetUserWithRoadmapProgresss(Guid userId)
+	public async Task<UserProgressDto?> GetUserWithRoadmapProgress(Guid userId)
 	{
 		var user = await userRepository.GetWithRoadmapsProgressAsync(userId);
 		if (user == null)
