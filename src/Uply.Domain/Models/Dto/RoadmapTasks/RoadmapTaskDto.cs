@@ -11,7 +11,9 @@ public class RoadmapTaskDto : IMapFrom<RoadmapTask>
     public string Description { get; set; } = null!;
     public bool IsCompleted { get; set; }
 
-    public TaskReportDto? TaskReport { get; set; }
+	public int TaskNumber { get; set; }
+
+	public TaskReportDto? TaskReport { get; set; }
 
     public void ConfigureMapping(TypeAdapterConfig config)
     {
