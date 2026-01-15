@@ -7,6 +7,7 @@ using Uply.Domain.Abstractions.Services;
 using Uply.Domain.Constants;
 using Uply.Domain.Entities;
 using Uply.Domain.Enums;
+using Uply.Domain.Models.Dto.RoadmapTasks;
 using Uply.Web.Models._Roadmap_;
 
 namespace Uply.Infrastructure.ChatGpt;
@@ -34,7 +35,7 @@ public class ChatGptClient : IChatGptClient
             taskAmount = daysRemain / model.Period.ToDaysCount();
         }
 
-        string prompt = ChatGptConstants.PromptTemplate
+        var prompt = ChatGptConstants.PromptTemplate
             .Replace("{StartingPoint}", model.StartingPoint)
             .Replace("{Goal}", model.Goal)
             .Replace("{Deadline}", model.Deadline?.ToString("dd.MM.yyyy") ?? "не указан")
@@ -58,8 +59,6 @@ public class ChatGptClient : IChatGptClient
 
         var json = await response.Content.ReadAsStringAsync();
 
-        _logger.LogInformation(json);
-
         using var doc = JsonDocument.Parse(json);
         var content = doc.RootElement
             .GetProperty("choices")[0]
@@ -71,21 +70,25 @@ public class ChatGptClient : IChatGptClient
 
         if (rawContent.StartsWith("```"))
         {
-            int firstNewline = rawContent.IndexOf('\n');
-            int lastTicks = rawContent.LastIndexOf("```");
+            var firstNewline = rawContent.IndexOf('\n');
+            var lastTicks = rawContent.LastIndexOf("```");
             if (firstNewline >= 0 && lastTicks > firstNewline)
             {
                 rawContent = rawContent.Substring(firstNewline + 1, lastTicks - firstNewline - 1);
             }
         }
 
-        var tasks = rawContent is null ? [] : JsonSerializer.Deserialize<List<RoadmapTask>>(rawContent) ?? [];
+        var gptTasks = rawContent is null ? [] : JsonSerializer.Deserialize<List<RoadmapTaskGptDto>>(rawContent) ?? [];
 
-        for (int i = 0; i < tasks.Count; i++)
-        {
-            tasks[i].TaskNumber = i + 1;
-        }
+        var roadmapTasks = gptTasks
+            .Select((x, idx) => new RoadmapTask()
+            {
+                Description = x.Description,
+                Title = x.Title,
+                TaskNumber = idx + 1
+            })
+            .ToList();
 
-        return tasks;
+        return roadmapTasks;
     }
 }

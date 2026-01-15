@@ -191,4 +191,35 @@ public class RoadmapCollectionTests
         var taskToMove = collection.OrderedTasks[0];
         collection.MoveTask(taskToMove.Id, 10); // позиция вне диапазона
     }
+
+    [TestMethod]
+    public void CompletedTask_OneTask()
+    {
+        var tasks = CreateInitialTasks(1);
+        var collection = new RoadmapTaskCollection(tasks);
+
+        var firstTask = collection.CurrentTask;
+        Assert.IsTrue(firstTask!.IsActiveTask);
+    }
+
+    [TestMethod]
+    public void CompletedTasksMultiple()
+    {
+        var tasks = CreateInitialTasks(5);
+        for (var i = 0; i < 3; i++)
+        {
+            tasks[i].TaskReportId = Guid.NewGuid();
+        }
+
+        var collection = new RoadmapTaskCollection(tasks);
+
+        var currentTask = collection.CurrentTask!;
+        Assert.AreEqual(currentTask.TaskNumber, 4);
+        Assert.IsTrue(currentTask.IsActiveTask);
+
+        foreach (var task in collection.OrderedTasks.Where(x => x.Id != currentTask.Id))
+        {
+            Assert.IsFalse(task.IsActiveTask);
+        }
+    }
 }

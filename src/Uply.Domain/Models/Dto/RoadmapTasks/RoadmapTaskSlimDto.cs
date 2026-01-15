@@ -11,4 +11,5 @@ public record RoadmapTaskSlimDto : IMapFrom<RoadmapTask>
     public string Description { get; set; } = null!;
     public int TaskNumber { get; set; }
     public bool IsCompleted { get; set; }
+    public bool IsActiveTask { get; set; }
 }

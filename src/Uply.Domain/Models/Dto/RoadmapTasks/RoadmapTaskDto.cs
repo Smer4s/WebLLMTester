@@ -11,14 +11,17 @@ public class RoadmapTaskDto : IMapFrom<RoadmapTask>
     public string Description { get; set; } = null!;
     public bool IsCompleted { get; set; }
 
-	public int TaskNumber { get; set; }
+    public int TaskNumber { get; set; }
 
-	public TaskReportDto? TaskReport { get; set; }
+    public TaskReportDto? TaskReport { get; set; }
+
+    public bool IsActiveTask { get; set; }
 
     public void ConfigureMapping(TypeAdapterConfig config)
     {
         config.NewConfig<RoadmapTask, RoadmapTaskDto>()
             .Map(dest => dest.IsCompleted, src => src.IsCompleted)
-            .Map(dest => dest.TaskReport, src => src.TaskReport);
+            .Map(dest => dest.TaskReport, src => src.TaskReport)
+            .RequireDestinationMemberSource(true);
     }
 }

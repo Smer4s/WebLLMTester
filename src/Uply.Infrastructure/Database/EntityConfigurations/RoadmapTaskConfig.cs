@@ -15,5 +15,7 @@ public class RoadmapTaskConfig : IEntityTypeConfiguration<RoadmapTask>
             .WithOne(x => x.Task)
             .HasForeignKey<RoadmapTask>(x => x.TaskReportId)
             .IsRequired(false);
+
+        builder.Ignore(x => x.IsActiveTask);
     }
 }
