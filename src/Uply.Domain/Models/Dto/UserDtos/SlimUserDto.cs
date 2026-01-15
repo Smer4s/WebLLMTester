@@ -9,4 +9,6 @@ public record SlimUserDto : IMapFrom<User>
     public string? Username { get; set; }
     public required string FirstName { get; set; }
     public string? LastName { get; set; }
+
+    public uint GoldAmount { get; set; }
 }

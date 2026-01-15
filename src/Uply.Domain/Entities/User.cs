@@ -17,4 +17,6 @@ public class User : BaseEntity
     public string? PhotoUrl { get; set; }
 
     public ICollection<Roadmap> Roadmaps { get; set; } = [];
+
+    public uint GoldAmount { get; set; }
 }

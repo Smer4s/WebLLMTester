@@ -11,8 +11,9 @@ public class UserProgressDto : IMapFrom<User>
 	public required string FirstName { get; set; }
 	public string? LastName { get; set; }
 	public string? PhotoUrl { get; set; }
+    public uint GoldAmount { get; set; }
 
-	public ICollection<RoadmapProgressDto> Roadmaps { get; set; } = [];
+    public ICollection<RoadmapProgressDto> Roadmaps { get; set; } = [];
 
 	public void ConfigureMapping(TypeAdapterConfig config)
 	{

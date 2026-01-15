@@ -11,6 +11,7 @@ public class UserDto : IMapFrom<User>
     public required string FirstName { get; set; }
     public string? LastName { get; set; }
     public string? PhotoUrl { get; set; }
+    public uint GoldAmount { get; set; }
 
     public ICollection<RoadmapSlimDto> Roadmaps { get; set; } = [];
 
