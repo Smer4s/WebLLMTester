@@ -1,4 +1,5 @@
-﻿using Uply.Domain.Entities.Abstract;
+﻿using System.Linq.Expressions;
+using Uply.Domain.Entities.Abstract;
 
 namespace Uply.Domain.Abstractions.Repositories.Abstract;
 
@@ -10,4 +11,5 @@ public interface ICrudRepository<TEntity> where TEntity : BaseEntity
     Task UpdateAsync(TEntity entity);
     Task DeleteAsync(Guid id);
     Task<bool> IsExistsAsync(Guid id);
+    Task<bool> AnyAsync(Expression<Func<TEntity, bool>> selector);
 }
