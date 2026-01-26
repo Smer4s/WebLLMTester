@@ -73,6 +73,7 @@ public static class DependencyInjection
         services.AddScoped<IRoadmapService, RoadmapService>();
         services.AddScoped<IRoadmapTaskService, RoadmapTaskService>();
         services.AddScoped<ITaskReportService, TaskReportService>();
+        services.AddScoped<ISkinsService, SkinsService>();
 
         return services;
     }

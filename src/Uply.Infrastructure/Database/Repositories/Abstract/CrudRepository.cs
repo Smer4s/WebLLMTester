@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using Uply.Domain.Abstractions.Repositories.Abstract;
 using Uply.Domain.Entities.Abstract;
@@ -45,4 +46,6 @@ public abstract class CrudRepository<TEntity> : ICrudRepository<TEntity> where T
     }
 
     public Task<bool> IsExistsAsync(Guid id) => _dbSet.AnyAsync(x => x.Id == id);
+    
+    public Task<bool> AnyAsync(Expression<Func<TEntity, bool>> selector) => _dbSet.AnyAsync(selector);
 }
